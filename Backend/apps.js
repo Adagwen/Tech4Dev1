@@ -2,6 +2,7 @@ const http = require('http');
 
 const URL = require('url');
 const UserAc = require('./adduser');
+const userData = require('./datasource.json');
 const server = http.createServer(function (req, res) {
 
     const data = [
@@ -45,6 +46,11 @@ const server = http.createServer(function (req, res) {
         let u_age = params.age;
         UserAc(u_name, u_age);
         res.end("record added Succesfully");
+    }else if(req.url.startsWith('/displayData')){
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      res.writeHead(200, { 'Content_Type': 'application/json' });
+      res.write(JSON.stringify(userData));
+      res.end("Approved");
     }
     else if (req.url == '/contact') {
         res.writeHead(200, { 'Content_Type': 'text/html' });
